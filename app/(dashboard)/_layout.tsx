@@ -7,7 +7,7 @@ const tabs = [
   { label: "My Plants", name: "plants", icon: "local-florist" },
   { label: "Add Plant", name: "add-plant", icon: "add-circle-outline" },
   { label: "Reminders", name: "reminders", icon: "notifications-active" },
-  { label: "Profile", name: "profile", icon: "person" }
+ // { label: "Profile", name: "profile", icon: "person" }
 ] as const
 
 const DashboardLayout = () => {
