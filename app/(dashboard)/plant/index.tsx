@@ -1,20 +1,19 @@
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-  ImageBackground ,
-  Alert,
-  Image
-} from "react-native"
-import { useEffect, useState } from "react"
-import { useRouter, useSegments } from "expo-router"
-import { MaterialIcons } from "@expo/vector-icons"
 import { useLoader } from "@/context/LoaderContext"
 import { deletePlant, getAllPlants, plantsRef } from "@/services/plantService"
 import { Plant } from "@/types/plant"
+import { MaterialIcons } from "@expo/vector-icons"
+import { useRouter } from "expo-router"
 import { onSnapshot } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 
 
 const PlantScreen = () => {
@@ -84,16 +83,7 @@ const PlantScreen = () => {
         My Plants
       </Text>
 
-     <View className="absolute bottom-5 right-5">
-  <Pressable
-    className="bg-green-600 rounded-full p-5 shadow-lg"
-    onPress={() => router.push('/plant/new')}  // ✅ correct path
-  >
-    <MaterialIcons name="add" size={28} color="#fff" />
-  </Pressable>
-</View>
-
-      <ScrollView className="mt-4">       
+      <ScrollView className="mt-4 mb-20">       
         {plants.map((plant) => (
           <View
             key={plant.id}
@@ -138,6 +128,20 @@ const PlantScreen = () => {
           </View>
         ))}
       </ScrollView>
+
+      {/* Floating Add Button */}
+      <View className="absolute bottom-6 right-6 z-50">
+        <TouchableOpacity
+          className="bg-green-600 rounded-full p-4 shadow-lg elevation-8"
+          onPress={() => {
+            console.log("Add button pressed") // Debug log
+            router.push('/plant/new')
+          }}
+          activeOpacity={0.7}
+        >
+          <MaterialIcons name="add" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
     </View>
   </ImageBackground>
 )
