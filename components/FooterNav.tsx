@@ -3,32 +3,29 @@ import React from "react"
 import { useRouter, useSegments } from "expo-router"
 
 const tabs = [
-  { lable: "Home", path: "/home" },
-  { lable: "Project", path: "/project" },
-  { lable: "User", path: "/user" }
+  { label: "Home", path: "/home" },
+  { label: "Plant", path: "/plant" },
+  { label: "Settings", path: "/settings" }
 ] as const
 
 const FooterNav = () => {
   const router = useRouter()
+  const segments = useSegments()
 
-  const segment = useSegments() // ["project"]
-  const activeRouter = "/" + (segment[0] || "")
+  // Only match top-level segment (not subroutes like settings/profile)
+  const activeRoute = "/" + (segments.length > 0 ? segments[0] : "")
 
   return (
     <View className="flex-row justify-around border-gray-300 py-2 bg-white">
-      {/* {tabs.map(() => {
-        return <View></View>
-      })} */}
-      {tabs.map((data) => (
+      {tabs.map((tab) => (
         <Pressable
-          // data.path === activeRouter -> this button is active
-          //   "" + "" -> ` ${can use varibles like any} `
-          className={`py-1 px-4 rounded-lg ${data?.path === activeRouter ? "bg-blue-600" : ""}`}
-          onPress={() => {
-            router.push(data?.path)
-          }}
+          key={tab.path}
+          className={`py-1 px-4 rounded-lg ${
+            tab.path === activeRoute ? "bg-blue-600" : ""
+          }`}
+          onPress={() => router.push({ pathname: tab.path })}
         >
-          <Text className="text-2xl">{data?.lable}</Text>
+          <Text className="text-2xl text-gray-800">{tab.label}</Text>
         </Pressable>
       ))}
     </View>

@@ -55,9 +55,11 @@ export const getPlantById = async (id: string) => {
 
 // Delete a plant
 export const deletePlant = async (id: string) => {
-  const plantDocRef = doc(db, "plants", id)
-  return deleteDoc(plantDocRef)
-}
+  const plantDocRef = doc(db, "plants", id);
+  await deleteDoc(plantDocRef);
+  console.log("Firestore delete success:", id);
+};
+
 
 // Update a plant
 export const updatePlant = async (id: string, plant: Plant) => {

@@ -41,27 +41,29 @@ const PlantScreen = () => {
     return () => unsubscribe()
   }, [])
 
-  const handleDelete = async (id: string) => {
-     console.log("Attempting to delete:", id) //=====add this
-    Alert.alert("Delete", "Are you sure you want to delete this plant?", [
-      { text: "Cancel" },
-      {
-        text: "Delete",
-        onPress: async () => {
-          try {
-            showLoader()
-            await deletePlant(id)
-              console.log("Deleted:", id) // ✅ Add this
-            // No need to manually fetch — onSnapshot will auto-update
-          } catch (err) {
-            console.log("Error deleting plant", err)
-          } finally {
-            hideLoader()
-          }
+  const handleDelete = (id: string) => {
+  Alert.alert("Delete", "Are you sure you want to delete this plant?", [
+    { text: "Cancel", style: "cancel" },
+    {
+      text: "Delete",
+      style: "destructive",
+      onPress: async () => {
+        try {
+          showLoader();
+          console.log("Deleting from Firestore:", id);
+          await deletePlant(id);
+          console.log("Deleted successfully:", id);
+        } catch (err) {
+          console.error("Error deleting plant:", err);
+          Alert.alert("Error", "Failed to delete plant");
+        } finally {
+          hideLoader();
         }
       }
-    ])
-  }
+    }
+  ]);
+};
+
 
   return (
     <ImageBackground
