@@ -5,6 +5,8 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { onSnapshot } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+
 import {
   Alert,
   Image,
@@ -14,7 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native"
-import { getNextWateringDate } from "@/services/waterReminderService" // 🔑 use helper
+import { getNextWateringDate } from "../../../services/waterReminderService" // 🔑 use helper
 
 const PlantScreen = () => {
   const [plants, setPlants] = useState<Plant[]>([])
