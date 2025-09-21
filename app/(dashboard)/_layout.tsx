@@ -4,10 +4,10 @@ import { Tabs } from "expo-router"
 import { MaterialIcons } from "@expo/vector-icons"
 
 const tabs = [
-  { label: "My Plants", name: "plants", icon: "local-florist" },
-  { label: "Add Plant", name: "add-plant", icon: "add-circle-outline" },
   { label: "settings", name: "settings", icon: "notifications-active" },
- // { label: "Profile", name: "profile", icon: "person" }
+  { label: "My Plants", name: "plants", icon: "home" },
+  { label: "Add Plant", name: "add-plant", icon: "add-circle-outline" }
+  
 ] as const
 
 const DashboardLayout = () => {
