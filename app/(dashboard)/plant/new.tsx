@@ -5,13 +5,15 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  ScrollView
+  ScrollView,
+  Platform
 } from "react-native"
 import { useRouter } from "expo-router"
 import { createPlant } from "@/services/plantService"
 import { useLoader } from "@/context/LoaderContext"
 import { useAuth } from "@/context/AuthContext"
 import { Plant } from "@/types/plant"
+import DateTimePicker from "@react-native-community/datetimepicker"
 
 const NewPlantScreen = () => {
   const router = useRouter()
@@ -22,6 +24,8 @@ const NewPlantScreen = () => {
   const [type, setType] = useState("")
   const [wateringFrequency, setWateringFrequency] = useState("")
   const [photoUrl, setPhotoUrl] = useState("")
+  const [lastWatered, setLastWatered] = useState(new Date())
+  const [showDatePicker, setShowDatePicker] = useState(false)
 
   const handleSubmit = async () => {
     if (!name.trim()) {
@@ -43,7 +47,7 @@ const NewPlantScreen = () => {
         type,
         wateringFrequency: frequency,
         photoUrl: photoUrl.trim() || undefined,
-        lastWatered: new Date().toISOString(), // ✅ match with type
+        lastWatered: lastWatered.toISOString(),
         userId: user?.uid
       }
 
@@ -59,7 +63,9 @@ const NewPlantScreen = () => {
 
   return (
     <ScrollView className="flex-1 p-5 bg-green-50">
-      <Text className="text-2xl font-bold text-green-700 mb-4">Add New Plant</Text>
+      <Text className="text-2xl font-bold text-green-700 mb-4">
+        Add New Plant
+      </Text>
 
       <TextInput
         placeholder="Plant Name"
@@ -87,6 +93,29 @@ const NewPlantScreen = () => {
         onChangeText={setPhotoUrl}
       />
 
+      {/* Last Watered Picker */}
+      <View className="my-3">
+        <Text className="text-gray-700 mb-1">Last Watered:</Text>
+        <TouchableOpacity
+          className="border border-green-300 p-3 rounded-md bg-white"
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text>{lastWatered.toLocaleDateString()}</Text>
+        </TouchableOpacity>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={lastWatered}
+            mode="date"
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(Platform.OS === "ios") // keep open for iOS
+              if (selectedDate) setLastWatered(selectedDate)
+            }}
+          />
+        )}
+      </View>
+
       <TouchableOpacity
         className="bg-green-600 rounded-md px-6 py-3 my-4"
         onPress={handleSubmit}
@@ -98,8 +127,6 @@ const NewPlantScreen = () => {
 }
 
 export default NewPlantScreen
-
-
 
 
 // import React, { useState } from "react"
