@@ -4,6 +4,11 @@ This project is a mobile application developed using React Native with Expo and 
 It allows users to register, log in, add plants, and set reminders for plant care. 
 User data and plant details are stored in Firebase Firestore and authentication is handled with Firebase Authentication.
 
+## you tube link
+
+https://youtu.be/tE2Tz8vfjYA?feature=shared
+
+
 ## Setup Instructions
 
 # 1. Clone the repository
