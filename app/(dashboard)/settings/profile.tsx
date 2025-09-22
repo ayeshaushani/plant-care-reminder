@@ -7,7 +7,7 @@ const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const pickImage = async () => {
@@ -26,7 +26,7 @@ const ProfileScreen = () => {
         quality: 0.5,
       });
 
-      if (!result.canceled) {
+      if (!result.canceled && result.assets && result.assets.length > 0) {
         setProfileImage(result.assets[0].uri);
       }
     } catch (error) {
